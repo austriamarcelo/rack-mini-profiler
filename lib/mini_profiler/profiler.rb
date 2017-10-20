@@ -378,12 +378,12 @@ module Rack
         response = Rack::Response.new([], status, headers)
         script   = self.get_profile_script(env)
 
-        if String === head
-          response.write inject(head,script)
+        if String === body
+          response.write inject(body,script)
         else
-          head.each { |fragment| response.write inject(fragment, script) }
+          body.each { |fragment| response.write inject(fragment, script) }
         end
-        head.close if head.respond_to? :close
+        body.close if body.respond_to? :close
         response.finish
       else
         nil
@@ -391,7 +391,7 @@ module Rack
     end
 
     def inject(fragment, script)
-      # find explicit or implicit head
+      # find explicit or implicit body
       index = fragment.rindex(/<\/head>/i) || fragment.rindex(/<body>/i)
       if index
         # if for whatever crazy reason we dont get a utf string,
