@@ -392,7 +392,7 @@ module Rack
 
     def inject(fragment, script)
       # find explicit or implicit body
-      index = fragment.rindex(/<\/body>/i) || fragment.rindex(/<\/html>/i)
+      index = fragment.rindex(/<\/head>/i) || fragment.rindex(/<body>/i)
       if index
         # if for whatever crazy reason we dont get a utf string,
         #   just force the encoding, no utf in the mp scripts anyway
